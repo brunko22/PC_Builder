@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Form Ricerca Build</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/min.css') }}">
+</head>
+<body>
+{% include "navbar.html" %}
+<div class="container">
+<div class="jumbotron">
+    <h1>Ricerca Build</h1>
+    <form action="/risultati" method="POST">
+         <div class="form-group">
+        <label for="utilizzo">Seleziona il tipo di utilizzo:</label>
+        <select id="utilizzo" class="form-control form-control-sm" name="utilizzo" >
+            <option value="Gaming">Gaming</option>
+            <option value="Lavoro">Lavoro</option>
+            <option value="Editing">Editing</option>
+            <option value="Generico">Generico</option>
+            <option value="" selected="true" ></option>
+        </select>
+         </div>
+         <div class="form-group">
+        <label>Tipo Ram:</label>
+        <select class="form-control form-control-sm" name="tipo_ram">
+            <option value="DDR4">DDR4</option>
+            <option value="DDR5">DDR5</option>
+            <option value="" selected="true"></option>
+        </select>
+              </div>
+         <div class="form-group">
+        <label>Fascia di Prezzo:</label>
+             <input type="number" name="fascia" class="form-control" min="0">
+    </div>
+        <div class="form-group">
+            <button class="btn btn-info" type="submit">Ricerca</button>
+        </div>
+    </form>
+    </div>
+    </div>
+{% include "footer.html" %}
+</body>
+</html>

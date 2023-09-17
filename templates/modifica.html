@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PC BUILDER</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/min.css') }}">
+
+</head>
+<body>
+{% include "navbar.html" %}
+<div class ="container">
+    <form method="post" action="/update">
+        <h1>Modifica la build Uid:{{ build.get_uid() }}</h1>
+        <div class="jumbotron">
+            <h3 class="text-center">INSERISCI BUILD</h3>
+            <input type="text" hidden name="uid" value="{{  build.get_uid()  }}">
+            <div class="row">
+                <label>Prezzo *</label>
+                <input type="number" name="prezzo" min="0" class="form-control form-control-sm mb-2" value="{{ build.get_prezzo() }}"required/>
+            </div>
+            <div class="row">
+            <label>Tipo ram *</label>
+                <select name="tipo_ram" class="form-control form-control-sm mb-2" required>
+                    <option value="DDR4" {% if build.get_tipo_ram() == "DDR4" %} selected {% endif %}>DDR4</option>
+                    <option value="DDR5" {% if build.get_tipo_ram() == "DDR5" %} selected {% endif %}>DDR5</option>
+                </select>
+                </div>
+                <div class="row">
+            <label>Utilizzo *</label>
+                <select name="utilizzo" class="form-control form-control-sm mb-2" required>
+                    <option value="Gaming" {% if build.get_utilizzo() == "Gaming" %} selected {% endif %}>Gaming</option>
+                    <option value="Lavoro" {% if build.get_utilizzo() == "Lavoro" %} selected {% endif %}>Lavoro</option>
+                    <option value="Editing" {% if build.get_utilizzo() == "Editing" %} selected {% endif %}>Editing</option>
+                    <option value="Generico" {% if build.get_utilizzo() == "Generico" %} selected {% endif %}>Generico</option>
+                </select>
+                    </div>
+                    <div class="row">
+                        <label>Fascia *</label>
+                        <input type="number" name="fascia" min="0" class="form-control form-control-sm mb-2" value="{{ build.fascia }}" required>
+                    </div>
+                    <div class="row">
+                        <label>Componenti *</label>
+                        <textarea type="text" name="componenti" class="form-control form-control-sm mb-2" required>{{build.get_componenti()}}</textarea>
+                    </div>
+                        <div class="row">
+                             <button type="submit" class="btn btn-info mt-2" >Modifica</button>
+                        </div>
+        </div>
+    </form>
+</div>
+{% include "footer.html" %}
+</body>
+</html>

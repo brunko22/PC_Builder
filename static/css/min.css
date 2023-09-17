@@ -1,0 +1,81 @@
+body{
+  display:flex;
+  height:100vh;
+    width: 100vw;
+    flex-direction:column;
+    overflow-x:hidden;
+}
+
+.container{
+    margin-top: 7rem;
+    flex: 1 0 30%;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+footer{
+    bottom: 0;
+    right: 0;
+    left: 0;
+  width: 100%;
+}
+
+  .tab {
+    display: none;
+  }
+
+  /* Style for the tab content */
+  .tab-content {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  /* Style for active tab */
+  .tab.active {
+    display: block;
+  }
+  div{
+    word-break: break-all ;
+  }
+
+.carousel-item, img{
+    max-height: 60rem;
+    height: 60rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+
+}
+
+input:invalid {
+  border: 2px solid red;
+}
+
+textarea:invalid {
+  border: 2px solid red;
+}
+
+select:invalid {
+  border: 2px solid red;
+}
+
+
+input:valid {
+  border: 2px solid green;
+}
+
+textarea:valid {
+  border: 2px solid green;
+}
+
+select:valid {
+  border: 2px solid green;
+}
+
+.alert{
+    width: 20rem;
+}

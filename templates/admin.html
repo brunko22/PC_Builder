@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amministrazione</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/min.css') }}">
+</head>
+<body>
+        {% include "navbar.html" %}
+
+
+            <div class ="container">
+
+                <!-- Tab buttons -->
+<ul class="tab-buttons nav nav-tabs">
+    <li class="nav-item">
+        <a class="tab-button nav-link" onclick="openTab(event, 'tab1')">INSERISCI BUILD</a>
+    </li>
+    <li class="nav-item">
+  <a class="tab-button nav-link" onclick="openTab(event, 'tab2')">MODIFICA BUILD</a>
+    <li class="nav-item">
+  <a class="tab-button nav-link" onclick="openTab(event, 'tab3')">CANCELLA BUILD</a>
+</li>
+</ul>
+
+<!-- Tab contents -->
+<div id="tab1" class="tab-content">
+
+    <form method="post" action="/insert">
+        <h2>Inserisci Build</h2>
+        <div class="jumbotron">
+
+            <div class="row">
+                <label>Prezzo *</label>
+                <input type="number" name="prezzo" min="0" class="form-control form-control-sm mb-2" required/>
+            </div>
+            <div class="row">
+            <label>Tipo ram *</label>
+                <select name="tipo_ram" class="form-control form-control-sm mb-2" required>
+                    <option value="DDR4">DDR4</option>
+                    <option value="DDR5">DDR5</option>
+                </select>
+                </div>
+                <div class="row">
+            <label>Utilizzo *</label>
+                <select name="utilizzo" class="form-control form-control-sm mb-2" required>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Lavoro">Lavoro</option>
+                    <option value="Editing">Editing</option>
+                    <option value="Generico">Generico</option>
+                </select>
+                    </div>
+                    <div class="row">
+                        <label>Fascia *</label>
+                        <input type="number" name="fascia" min="0" class="form-control form-control-sm mb-2" required>
+                    </div>
+                    <div class="row">
+                        <label>Componenti *</label>
+                        <textarea name="componenti" class="form-control form-control-sm mb-2" required></textarea>
+                    </div>
+                        <div class="row">
+                             <button type="submit" class="btn btn-info mt-2"  >Aggiungi</button>
+                        </div>
+        </div>
+    </form>
+</div>
+
+<div id="tab2" class="tab-content">
+  <h2>Modifica Build</h2>
+    {% if builds.__len__()==0 %}
+        <h3 class="text-center">Non ci sono build</h3>
+    {% endif %}
+    {% for build in builds %}
+            <div class="jumbotron text-left">
+
+                <div class="row">
+                    <div class="col-sm">Prezzo: {{ build.get_prezzo()}}</div>
+                    <div class="col-sm">Utilizzo: {{ build.get_utilizzo() }}</div>
+                    <div class="col-sm">Tipo Ram: {{ build.get_tipo_ram() }}</div>
+                    <div class="col-sm">Fascia: {{ build.get_fascia()}}</div>
+                </div>
+
+                <div class="row col-sm">Componenti: {{ build.get_componenti()|safe }}</div>
+                <div class="row col-sm">
+                    <a class="btn btn-info" href="/modifica/{{ build.get_uid() }}">Vai alla modifica</a>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+
+<div id="tab3" class="tab-content">
+  <h2>Cancella Build</h2>
+    {% if builds.__len__()==0 %}
+        <h3 class="text-center">Non ci sono build</h3>
+    {% endif %}
+  {% for build in builds %}
+            <div class="jumbotron text-left">
+
+                <div class="row">
+                    <div class="col-sm">Prezzo: {{ build.get_prezzo()}}</div>
+                    <div class="col-sm">Utilizzo: {{ build.get_utilizzo() }}</div>
+                    <div class="col-sm">Tipo Ram: {{ build.get_tipo_ram() }}</div>
+                    <div class="col-sm">Fascia: {{ build.get_fascia()}}</div>
+                </div>
+
+                <div class="row col-sm">Componenti: {{ build.get_componenti()|safe }}</div>
+                <div class="row col-sm">
+                    <form action="/cancella" method="post">
+                        <input  type="text" hidden value="{{ build.get_uid() }}" name="uid">
+                        <button type="submit" class="btn btn-danger">Elimina</button>
+                    </form>
+
+                </div>
+            </div>
+        {% endfor %}
+</div>
+
+<script>
+  // Function to open a specific tab
+  function openTab(event, tabId) {
+    // Hide all tab contents
+    var tabContents = document.getElementsByClassName("tab-content");
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].style.display = "none";
+    }
+
+    // Remove "active" class from all tab buttons
+    var tabButtons = document.getElementsByClassName("tab-button");
+    for (var i = 0; i < tabButtons.length; i++) {
+      tabButtons[i].classList.remove("active");
+    }
+
+    // Show the selected tab content and mark the button as active
+    document.getElementById(tabId).style.display = "block";
+    event.currentTarget.classList.add("active");
+  }
+
+  // Open the first tab by default
+  document.getElementById("tab1").style.display = "block";
+  document.getElementsByClassName("tab-button")[0].classList.add("active");
+</script>
+            </div>
+
+         {% for message in get_flashed_messages() %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+        {% endfor %}
+
+            {% include "footer.html" %}
+
+
+</body>
+</html>

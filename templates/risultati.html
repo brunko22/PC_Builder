@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista Builds</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/min.css') }}">
+</head>
+<body>
+{% include "navbar.html" %}
+<div class="container">
+{% if builds.__len__()!=0 %}
+    <h3>Lista Builds</h3>
+{% endif %}
+        {% if builds.__len__()==0 %}
+                    <h3 class="text-center">Nessun risulato trovato</h3>
+        {% endif %}
+        {% for build in builds %}
+            <div class="jumbotron text-left">
+
+                <div class="row">
+                    <div class="col-sm">Prezzo: {{ build.get_prezzo()}}</div>
+                    <div class="col-sm">Utilizzo: {{ build.get_utilizzo() }}</div>
+                    <div class="col-sm">Tipo Ram: {{ build.get_tipo_ram() }}</div>
+                    <div class="col-sm">Fascia: {{ build.get_fascia()}}</div>
+                </div>
+
+                <div class="row col-sm">Componenti: {{ build.get_componenti()|safe }}</div>
+
+            </div>
+        {% endfor %}
+        <a href="/ricerca" class="btn btn-success"><h3>Torna Indietro</h3></a>
+</div>
+{% include "footer.html" %}
+</body>
+</html>
